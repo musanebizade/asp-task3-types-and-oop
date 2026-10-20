@@ -28,9 +28,20 @@ ruby main.rb
 
 ```
 asp-task3-types-and-oop/
-├── task1/   memory_benchmark.cpp, bench.exe, README.md
-├── task2/   Program.cs, README.md
-├── task3/   library_item.rb, book.rb, dvd.rb, cd.rb, library.rb, main.rb, README.md
+├── task1/
+│   ├── memory_benchmark.cpp
+│   └── README.md
+├── task2/
+│   ├── Program.cs
+│   └── README.md
+├── task3/
+│   ├── library_item.rb
+│   ├── book.rb
+│   ├── dvd.rb
+│   ├── cd.rb
+│   ├── library.rb
+│   ├── main.rb
+│   └── README.md
 ├── .gitignore
 └── README.md
 ```
