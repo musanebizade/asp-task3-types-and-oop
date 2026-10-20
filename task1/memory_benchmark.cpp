@@ -7,10 +7,10 @@
 using namespace std;
 using namespace std::chrono;
 
-// 100,000 ints * 4 bytes = about 400 KB.
-// This is big enough to be "large", but still safe for the default
-// 8 MB stack limit on Linux. Windows has a 1 MB default stack, so
-// on Windows this value must be made smaller (see README).
+// 100,000 ints * 4 bytes = about 390 KB.
+// This is big enough to be "large", but still fits in the default
+// stack (8 MB on Linux, 1 MB on Windows). A much bigger value would
+// overflow the stack in useStackArray() (see README).
 const int ARRAY_SIZE = 100000;
 
 // number of times every function is called (task says at least 100,000)
@@ -39,7 +39,9 @@ long long useStaticArray() {
 
 // 2) stack array: a new array is created inside the stack frame every
 //    time the function is called and it disappears when the function returns.
-//    "Allocating" it is only moving the stack pointer.
+//    Normally this is only moving the stack pointer, but the frame here is
+//    bigger than one page (4 KB), so the compiler adds a stack probe
+//    (___chkstk_ms on Windows) that touches every page (see README).
 long long useStackArray() {
     int arr[ARRAY_SIZE];
     volatile int* p = arr;
@@ -53,7 +55,7 @@ long long useStackArray() {
 
 // 3) heap array: memory is requested from the allocator with malloc
 //    and must be given back with free. Every call asks the allocator
-//    for ~1 MB, so this is the slowest one.
+//    for ~390 KB, so it is slower than static (see README for the results).
 long long useHeapArray() {
     int* arr = (int*) malloc(ARRAY_SIZE * sizeof(int));
 
