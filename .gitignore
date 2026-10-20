@@ -1,0 +1,9 @@
+# compiled binaries
+*.out
+*.exe
+task1/bench
+
+# editor files
+.vscode/
+.idea/
+.DS_Store
